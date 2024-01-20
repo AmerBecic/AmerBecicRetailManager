@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.34407.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABDataManager", "ABDataManager\ABDataManager.csproj", "{0E0A057B-7815-4D12-AB36-6620B6FDBC54}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ABMData", "ABMData\ABMData.sqlproj", "{989A7B83-4877-47EF-B37B-F7E535B5B936}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABMDesktopUI", "ABMDesktopUI\ABMDesktopUI.csproj", "{AA5C62CC-33DC-427F-B8F0-D3877A08B316}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{0E0A057B-7815-4D12-AB36-6620B6FDBC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E0A057B-7815-4D12-AB36-6620B6FDBC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E0A057B-7815-4D12-AB36-6620B6FDBC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{989A7B83-4877-47EF-B37B-F7E535B5B936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{989A7B83-4877-47EF-B37B-F7E535B5B936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{989A7B83-4877-47EF-B37B-F7E535B5B936}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{989A7B83-4877-47EF-B37B-F7E535B5B936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{989A7B83-4877-47EF-B37B-F7E535B5B936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{989A7B83-4877-47EF-B37B-F7E535B5B936}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AA5C62CC-33DC-427F-B8F0-D3877A08B316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA5C62CC-33DC-427F-B8F0-D3877A08B316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA5C62CC-33DC-427F-B8F0-D3877A08B316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA5C62CC-33DC-427F-B8F0-D3877A08B316}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
