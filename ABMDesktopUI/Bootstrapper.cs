@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using ABMDesktopUI.Helpers;
 using ABMDesktopUI.ViewModels;
 using Caliburn.Micro;
 
@@ -15,6 +17,13 @@ namespace ABMDesktopUI
         public Bootstrapper()
         {
             Initialize();
+
+            ConventionManager.AddElementConvention<PasswordBox>(
+                    PasswordBoxHelper.BoundPasswordProperty,
+                    "Password",
+                    "PasswordChanged");
+
+            // other bootstrapper stuff here
         }
 
         protected override void Configure()
