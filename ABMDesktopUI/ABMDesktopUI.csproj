@@ -115,8 +115,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Helpers\APIHelper.cs" />
-    <Compile Include="Helpers\IAPIHelper.cs" />
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -173,6 +171,10 @@
     <ProjectReference Include="..\ABDataManager\ABDataManager.csproj">
       <Project>{0E0A057B-7815-4D12-AB36-6620B6FDBC54}</Project>
       <Name>ABDataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ABMDesktopUI.Library\ABMDesktopUI.Library.csproj">
+      <Project>{AE877086-A355-42E9-B99A-308955045266}</Project>
+      <Name>ABMDesktopUI.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

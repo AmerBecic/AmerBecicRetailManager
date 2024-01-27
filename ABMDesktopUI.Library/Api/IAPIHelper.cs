@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
-using ABDataManager.Models;
+using ABMDesktopUI.Library.Models;
 
-namespace ABMDesktopUI.Helpers
+namespace ABMDesktopUI.Library.Api
 {
     public interface IAPIHelper
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
+        Task GetLoggedInUserInfo(string token);
     }
 }

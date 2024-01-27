@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using ABMDesktopUI.Helpers;
+using ABMDesktopUI.Library.Api;
+using ABMDesktopUI.Library.Models;
 using ABMDesktopUI.ViewModels;
 using Caliburn.Micro;
 
@@ -33,7 +35,8 @@ namespace ABMDesktopUI
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
-                .Singleton<IAPIHelper, APIHelper>();
+                .Singleton<IAPIHelper, APIHelper>()
+                .Singleton<ILoggedInUserModel, LoggedInUserModel>();
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)

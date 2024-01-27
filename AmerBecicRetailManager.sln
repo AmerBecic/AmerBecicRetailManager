@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABMDesktopUI", "ABMDesktopU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABDataManager.Library", "ABDataManager.Library\ABDataManager.Library.csproj", "{46CCA749-6516-427F-94BC-E5300464EAA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABMDesktopUI.Library", "ABMDesktopUI.Library\ABMDesktopUI.Library.csproj", "{AE877086-A355-42E9-B99A-308955045266}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{46CCA749-6516-427F-94BC-E5300464EAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46CCA749-6516-427F-94BC-E5300464EAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46CCA749-6516-427F-94BC-E5300464EAA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE877086-A355-42E9-B99A-308955045266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE877086-A355-42E9-B99A-308955045266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE877086-A355-42E9-B99A-308955045266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE877086-A355-42E9-B99A-308955045266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
