@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ABMDesktopUI.Views
 {
     /// <summary>
-    /// Interaction logic for SaleView.xaml
+    /// Interaction logic for SalesView.xaml
     /// </summary>
-    public partial class SaleView : UserControl
+    public partial class SalesView : UserControl
     {
-        public SaleView()
+        public SalesView()
         {
             InitializeComponent();
         }
