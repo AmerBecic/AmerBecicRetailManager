@@ -15,7 +15,7 @@ namespace ABMDesktopUI.ViewModels
         private string _userName;
         private string _password;
         private IAPIHelper _apiHelper;
-        IEventAggregator _events;
+        private IEventAggregator _events;
 
         public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {

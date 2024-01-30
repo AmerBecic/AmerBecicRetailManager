@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using ABMDesktopUI.Library.Models;
 
 namespace ABMDesktopUI.Library.Api
@@ -7,5 +8,7 @@ namespace ABMDesktopUI.Library.Api
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
         Task GetLoggedInUserInfo(string token);
+
+        HttpClient ApiClient { get; }
     }
 }

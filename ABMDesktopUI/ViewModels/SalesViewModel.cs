@@ -4,15 +4,33 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ABMDesktopUI.Library.Api;
+using ABMDesktopUI.Library.Models;
 using Caliburn.Micro;
 
 namespace ABMDesktopUI.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        private BindingList<string> _products;
+        private BindingList<ProductModel> _products;
+        IProductApi _productApi;
 
-        public BindingList<string> Products
+        public SalesViewModel(IProductApi productApi)
+        {
+            _productApi = productApi;
+        }
+
+        protected override async void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            await LoadProducts();
+        }
+        private async Task LoadProducts()
+        {
+            var productList = await _productApi.GetAll();
+            Products = new BindingList<ProductModel>(productList);
+        }
+        public BindingList<ProductModel> Products
         {
             get { return _products; }
             set
@@ -22,9 +40,9 @@ namespace ABMDesktopUI.ViewModels
             }
         }
 
-        private BindingList<string> _cart;
+        private BindingList<ProductModel> _cart;
 
-        public BindingList<string> Cart
+        public BindingList<ProductModel> Cart
         {
             get { return _cart; }
             set
