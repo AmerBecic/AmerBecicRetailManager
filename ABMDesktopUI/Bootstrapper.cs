@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using ABMDesktopUI.Helpers;
 using ABMDesktopUI.Library.Api;
+using ABMDesktopUI.Library.Helpers;
 using ABMDesktopUI.Library.Models;
 using ABMDesktopUI.ViewModels;
 using Caliburn.Micro;
@@ -37,6 +38,7 @@ namespace ABMDesktopUI
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<IAPIHelper, APIHelper>()
+                .Singleton<IConfigHelper, ConfigHelper>()
                 .Singleton<ILoggedInUserModel, LoggedInUserModel>();
 
             GetType().Assembly.GetTypes()

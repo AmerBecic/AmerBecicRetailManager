@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ABMDesktopUI.Library.Api;
+using ABMDesktopUI.Library.Helpers;
 using ABMDesktopUI.Library.Models;
 using Caliburn.Micro;
 
@@ -14,9 +12,11 @@ namespace ABMDesktopUI.ViewModels
     {
         private BindingList<ProductModel> _products;
         IProductApi _productApi;
+        IConfigHelper _configHelper;
 
-        public SalesViewModel(IProductApi productApi)
+        public SalesViewModel(IProductApi productApi, IConfigHelper configHelper)
         {
+            _configHelper = configHelper;
             _productApi = productApi;
         }
 
@@ -83,31 +83,51 @@ namespace ABMDesktopUI.ViewModels
         {
             get
             {
-                decimal subTotal = 0;
-
-                foreach(var product in Cart)
-                {
-                    subTotal += product.Product.RetailPrice * product.QuantityInCart;
-                }
-                return subTotal.ToString("C");
+                return CalculateSubTotal().ToString("C");
             }
+        }
+
+        private decimal CalculateSubTotal()
+        {
+            decimal subTotal = 0;
+
+            foreach (var product in Cart)
+            {
+                subTotal += product.Product.RetailPrice * product.QuantityInCart;
+            }
+            return subTotal;
         }
 
         public string Tax
         {
             get
             {
-                //TODO . will be calculation
-                return "$0.00";
+                return CalculateTax().ToString("C");
             }
+        }
+
+        private decimal CalculateTax()
+        {
+            decimal tax = 0;
+            decimal taxRate = _configHelper.GetTaxRate();
+
+            foreach (var product in Cart)
+            {
+                if (product.Product.IsTaxable)
+                {
+                    tax += product.Product.RetailPrice * product.QuantityInCart * taxRate;
+                }
+            }
+
+            return tax;
         }
 
         public string Total
         {
             get
             {
-                //TODO . will be calculation
-                return "$0.00";
+                decimal total = CalculateSubTotal() + CalculateTax();
+                return total.ToString("C");
             }
         }
 
@@ -153,6 +173,8 @@ namespace ABMDesktopUI.ViewModels
             SelectedProduct.QuantityInStock -= ProductQuantity;
             ProductQuantity = 1;
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total);
         }
 
         public bool CanRemoveFromCart
@@ -169,6 +191,8 @@ namespace ABMDesktopUI.ViewModels
         public void RemoveFromCart()
         {
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total);
         }
 
         public bool CanCheckOut
