@@ -40,9 +40,23 @@ namespace ABMDesktopUI.ViewModels
             }
         }
 
-        private BindingList<ProductModel> _cart;
+        private ProductModel _selectedProduct;
 
-        public BindingList<ProductModel> Cart
+        public ProductModel SelectedProduct
+        {
+            get { return _selectedProduct; }
+            set 
+            { 
+                _selectedProduct = value;
+                NotifyOfPropertyChange(() => SelectedProduct);
+                NotifyOfPropertyChange(() => CanAddToCart);
+            }
+        }
+
+
+        private BindingList<CartProductModel> _cart = new BindingList<CartProductModel>();
+
+        public BindingList<CartProductModel> Cart
         {
             get { return _cart; }
             set
@@ -53,23 +67,29 @@ namespace ABMDesktopUI.ViewModels
         }
 
 
-        private int _itemQuantity;
+        private int _productQuantity = 1;
 
-        public int ItemQuantity
+        public int ProductQuantity
         {
-            get { return _itemQuantity; }
+            get { return _productQuantity; }
             set
             {
-                _itemQuantity = value;
-                NotifyOfPropertyChange(() => ItemQuantity);
+                _productQuantity = value;
+                NotifyOfPropertyChange(() => ProductQuantity);
+                NotifyOfPropertyChange(() => CanAddToCart);
             }
         }
         public string SubTotal
         {
-            get 
+            get
             {
-                //TODO . will be calculation
-                return "$0.00"; 
+                decimal subTotal = 0;
+
+                foreach(var product in Cart)
+                {
+                    subTotal += product.Product.RetailPrice * product.QuantityInCart;
+                }
+                return subTotal.ToString("C");
             }
         }
 
@@ -98,14 +118,41 @@ namespace ABMDesktopUI.ViewModels
                 bool output = false;
 
                 //Make sure something is selected
-                //Make sure tere is an item quantity
+                //Make sure tere is an product quantity
+
+                if(ProductQuantity > 0 && SelectedProduct?.QuantityInStock >= ProductQuantity)
+                {
+                    output = true;
+                }
 
                 return output;
             }
         }
         public void AddToCart()
         {
+            CartProductModel existingProduct = Cart.FirstOrDefault(x => x.Product == SelectedProduct);
+            
+            if(existingProduct != null)
+            {
+                existingProduct.QuantityInCart += ProductQuantity;
+                //Don't trust this, needs change to better refresh DisplayProducts in Cart
+                Cart.Remove(existingProduct);
+                Cart.Add(existingProduct);
+            }
 
+            else
+            {
+                CartProductModel Product = new CartProductModel
+                {
+                    Product = SelectedProduct,
+                    QuantityInCart = ProductQuantity
+                };
+                Cart.Add(Product);
+            }
+
+            SelectedProduct.QuantityInStock -= ProductQuantity;
+            ProductQuantity = 1;
+            NotifyOfPropertyChange(() => SubTotal);
         }
 
         public bool CanRemoveFromCart
@@ -121,7 +168,7 @@ namespace ABMDesktopUI.ViewModels
         }
         public void RemoveFromCart()
         {
-
+            NotifyOfPropertyChange(() => SubTotal);
         }
 
         public bool CanCheckOut
