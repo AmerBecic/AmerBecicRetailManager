@@ -111,13 +111,17 @@ namespace ABMDesktopUI.ViewModels
             decimal tax = 0;
             decimal taxRate = _configHelper.GetTaxRate();
 
-            foreach (var product in Cart)
-            {
-                if (product.Product.IsTaxable)
-                {
-                    tax += product.Product.RetailPrice * product.QuantityInCart * taxRate;
-                }
-            }
+            tax = Cart
+                .Where(x => x.Product.IsTaxable)
+                .Sum(x => x.Product.RetailPrice * x.QuantityInCart * taxRate);
+
+            //foreach (var product in Cart)
+            //{
+            //    if (product.Product.IsTaxable)
+            //    {
+            //        tax += product.Product.RetailPrice * product.QuantityInCart * taxRate;
+            //    }
+            //}
 
             return tax;
         }
