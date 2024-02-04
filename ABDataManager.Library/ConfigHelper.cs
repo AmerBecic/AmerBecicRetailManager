@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ABMDesktopUI.Library.Helpers
+namespace ABDataManager.Library
 {
-    public class ConfigHelper : IConfigHelper
+    public class ConfigHelper
     {
-        //TODO Move this from Config to the API
-        public decimal GetTaxRate()
+        public static decimal GetTaxRate()
         {
             string taxRateText = ConfigurationManager.AppSettings["taxRate"];
 

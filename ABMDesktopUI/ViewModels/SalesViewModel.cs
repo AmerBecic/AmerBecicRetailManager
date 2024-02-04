@@ -11,13 +11,15 @@ namespace ABMDesktopUI.ViewModels
     public class SalesViewModel : Screen
     {
         private BindingList<ProductModel> _products;
+        ISaleApi _saleApi;
         IProductApi _productApi;
         IConfigHelper _configHelper;
 
-        public SalesViewModel(IProductApi productApi, IConfigHelper configHelper)
+        public SalesViewModel(IProductApi productApi, ISaleApi saleApi, IConfigHelper configHelper)
         {
             _configHelper = configHelper;
             _productApi = productApi;
+            _saleApi = saleApi;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -179,6 +181,7 @@ namespace ABMDesktopUI.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
         public bool CanRemoveFromCart
@@ -197,6 +200,7 @@ namespace ABMDesktopUI.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
         public bool CanCheckOut
@@ -205,14 +209,28 @@ namespace ABMDesktopUI.ViewModels
             {
                 bool output = false;
 
-                //Make sure something is in cart
+                if(Cart.Count > 0)
+                {
+                    output = true;
+                }
 
                 return output;
             }
         }
-        public void CheckOut()
+        public async Task CheckOut()
         {
+            //Create a SaleModel and post to the API
+            SaleModel sale = new SaleModel();
+            foreach(var product in Cart)
+            {
+                sale.SaleDetails.Add(new SaleDetailModel
+                {
+                    ProductId = product.Product.Id,
+                    Quantity = product.QuantityInCart
+                });
+            }
 
+           await _saleApi.PostSale(sale);
         }
 
 

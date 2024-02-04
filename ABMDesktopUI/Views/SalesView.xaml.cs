@@ -24,5 +24,10 @@ namespace ABMDesktopUI.Views
         {
             InitializeComponent();
         }
+
+        private void RemoveFromCart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
