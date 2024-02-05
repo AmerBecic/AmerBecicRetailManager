@@ -74,6 +74,17 @@ namespace ABMDesktopUI.ViewModels
             }
         }
 
+        private async Task ResetSalesViewModel() 
+        {
+            Cart = new BindingList<CartProductDisplayModel>();
+
+            await LoadProducts();
+
+            NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
+        }
 
         private BindingList<CartProductDisplayModel> _cart = new BindingList<CartProductDisplayModel>();
 
@@ -263,6 +274,8 @@ namespace ABMDesktopUI.ViewModels
             }
 
            await _saleApi.PostSale(sale);
+
+           await ResetSalesViewModel();
         }
 
 
