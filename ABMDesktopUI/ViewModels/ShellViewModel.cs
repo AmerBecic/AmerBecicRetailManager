@@ -22,6 +22,11 @@ namespace ABMDesktopUI.ViewModels
             ActivateItem(IoC.Get<LoginViewModel>());
         }
 
+        public void ExitApplication()
+        {
+            TryClose();
+        }
+
         public void Handle(LogOnEvent message)
         {
             ActivateItem(_salesVM);
