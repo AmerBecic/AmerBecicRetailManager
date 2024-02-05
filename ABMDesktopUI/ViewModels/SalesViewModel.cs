@@ -1,23 +1,28 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using ABMDesktopUI.Library.Api;
 using ABMDesktopUI.Library.Helpers;
 using ABMDesktopUI.Library.Models;
+using ABMDesktopUI.Models;
+using AutoMapper;
 using Caliburn.Micro;
 
 namespace ABMDesktopUI.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        private BindingList<ProductModel> _products;
+        private BindingList<ProductDisplayModel> _products;
         ISaleApi _saleApi;
         IProductApi _productApi;
         IConfigHelper _configHelper;
+        IMapper _mapper;
 
-        public SalesViewModel(IProductApi productApi, ISaleApi saleApi, IConfigHelper configHelper)
+        public SalesViewModel(IProductApi productApi, ISaleApi saleApi, IConfigHelper configHelper, IMapper mapper)
         {
             _configHelper = configHelper;
+            _mapper = mapper;
             _productApi = productApi;
             _saleApi = saleApi;
         }
@@ -30,9 +35,10 @@ namespace ABMDesktopUI.ViewModels
         private async Task LoadProducts()
         {
             var productList = await _productApi.GetAll();
-            Products = new BindingList<ProductModel>(productList);
+            var products = _mapper.Map<List<ProductDisplayModel>>(productList);
+            Products = new BindingList<ProductDisplayModel>(products);
         }
-        public BindingList<ProductModel> Products
+        public BindingList<ProductDisplayModel> Products
         {
             get { return _products; }
             set
@@ -42,9 +48,9 @@ namespace ABMDesktopUI.ViewModels
             }
         }
 
-        private ProductModel _selectedProduct;
+        private ProductDisplayModel _selectedProduct;
 
-        public ProductModel SelectedProduct
+        public ProductDisplayModel SelectedProduct
         {
             get { return _selectedProduct; }
             set 
@@ -56,9 +62,9 @@ namespace ABMDesktopUI.ViewModels
         }
 
 
-        private BindingList<CartProductModel> _cart = new BindingList<CartProductModel>();
+        private BindingList<CartProductDisplayModel> _cart = new BindingList<CartProductDisplayModel>();
 
-        public BindingList<CartProductModel> Cart
+        public BindingList<CartProductDisplayModel> Cart
         {
             get { return _cart; }
             set
@@ -156,7 +162,7 @@ namespace ABMDesktopUI.ViewModels
         }
         public void AddToCart()
         {
-            CartProductModel existingProduct = Cart.FirstOrDefault(x => x.Product == SelectedProduct);
+            CartProductDisplayModel existingProduct = Cart.FirstOrDefault(x => x.Product == SelectedProduct);
             
             if(existingProduct != null)
             {
@@ -168,7 +174,7 @@ namespace ABMDesktopUI.ViewModels
 
             else
             {
-                CartProductModel Product = new CartProductModel
+                CartProductDisplayModel Product = new CartProductDisplayModel
                 {
                     Product = SelectedProduct,
                     QuantityInCart = ProductQuantity

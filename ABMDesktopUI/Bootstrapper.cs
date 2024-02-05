@@ -9,7 +9,9 @@ using ABMDesktopUI.Helpers;
 using ABMDesktopUI.Library.Api;
 using ABMDesktopUI.Library.Helpers;
 using ABMDesktopUI.Library.Models;
+using ABMDesktopUI.Models;
 using ABMDesktopUI.ViewModels;
+using AutoMapper;
 using Caliburn.Micro;
 
 namespace ABMDesktopUI
@@ -31,6 +33,16 @@ namespace ABMDesktopUI
 
         protected override void Configure()
         {
+            var configMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProductModel, ProductDisplayModel>();
+                cfg.CreateMap<CartProductModel, CartProductDisplayModel>();
+            });
+
+            var mapper = configMapper.CreateMapper();
+
+            _container.Instance<IMapper>(mapper);
+
             _container.Instance(_container)
                 .PerRequest<ISaleApi, SaleApi>()
                 .PerRequest<IProductApi, ProductApi>();
