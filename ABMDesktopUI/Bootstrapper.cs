@@ -30,8 +30,7 @@ namespace ABMDesktopUI
 
             // other bootstrapper stuff here
         }
-
-        protected override void Configure()
+        private IMapper ConfigureAutomapper()
         {
             var configMapper = new MapperConfiguration(cfg =>
             {
@@ -41,7 +40,11 @@ namespace ABMDesktopUI
 
             var mapper = configMapper.CreateMapper();
 
-            _container.Instance<IMapper>(mapper);
+            return mapper;
+        }
+        protected override void Configure()
+        {
+            _container.Instance<IMapper>(ConfigureAutomapper());
 
             _container.Instance(_container)
                 .PerRequest<ISaleApi, SaleApi>()
