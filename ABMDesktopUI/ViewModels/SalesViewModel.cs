@@ -48,6 +48,19 @@ namespace ABMDesktopUI.ViewModels
             }
         }
 
+        private CartProductDisplayModel _selectedCartProduct;
+
+        public CartProductDisplayModel SelectedCartProduct
+        {
+            get { return _selectedCartProduct; }
+            set
+            {
+                _selectedCartProduct = value;
+                NotifyOfPropertyChange(() => SelectedCartProduct);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
+            }
+        }
+
         private ProductDisplayModel _selectedProduct;
 
         public ProductDisplayModel SelectedProduct
@@ -167,9 +180,6 @@ namespace ABMDesktopUI.ViewModels
             if(existingProduct != null)
             {
                 existingProduct.QuantityInCart += ProductQuantity;
-                //Don't trust this, needs change to better refresh DisplayProducts in Cart
-                Cart.Remove(existingProduct);
-                Cart.Add(existingProduct);
             }
 
             else
@@ -196,13 +206,28 @@ namespace ABMDesktopUI.ViewModels
             {
                 bool output = false;
 
-                //Make sure something is selected
+                if (SelectedCartProduct != null && SelectedCartProduct?.QuantityInCart > 0)
+                {
+                    output = true;
+                }
 
                 return output;
             }
         }
         public void RemoveFromCart()
         {
+            SelectedCartProduct.Product.QuantityInStock += 1;
+
+            if (SelectedCartProduct.QuantityInCart > 1)
+            {
+                SelectedCartProduct.QuantityInCart -= 1;
+            }
+
+            else
+            {
+                Cart.Remove(SelectedCartProduct);
+            }
+
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
