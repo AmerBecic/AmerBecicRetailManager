@@ -12,6 +12,7 @@ namespace ABDataManager.Library.DataAccess
         public void SaveSale(SaleModel saleInfo, string cashierId)
         {
             //TODO make this SOLID, split into parts!!!
+
             //Start filling in the models we will save to the DB
             List<SaleDetailDBModel> details = new List<SaleDetailDBModel>();
             ProductData products = new ProductData();
@@ -55,17 +56,16 @@ namespace ABDataManager.Library.DataAccess
             SqlDataAccess sql = new SqlDataAccess();
 
             sql.SaveData<SaleDBModel>("dbo.spSale_Insert", sale, "ABMData");
+
             //Get Id from SaleModel
             sale.Id = sql.LoadData<int, dynamic>("dbo.spSaleIdLookup", new {CashierId = sale.CashierId, SaleDate = sale.SaleDate }, "ABMData").FirstOrDefault();
             
             //Finish filling in the SaleDetailModel
-
             foreach(var product in details)
             {
                 product.SaleId = sale.Id;
                 sql.SaveData<SaleDetailDBModel>("dbo.spSaleDetail_Insert", product, "ABMData");
             }
-            //Save the SaleDetailModel
 
 
         }
