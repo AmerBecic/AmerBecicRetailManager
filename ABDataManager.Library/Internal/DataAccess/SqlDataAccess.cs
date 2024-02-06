@@ -49,6 +49,8 @@ namespace ABDataManager.Library.Internal.DataAccess
             _connection.Open();
 
             _transaction = _connection.BeginTransaction();
+
+            isTransactionClosed = false;
         }
 
         public List<T> LoadDataInTransaction<T, U>(string storedProcedure, U parameters)
@@ -62,22 +64,43 @@ namespace ABDataManager.Library.Internal.DataAccess
         {
             _connection.Execute(storedProcedure, parameters, commandType: CommandType.StoredProcedure, transaction: _transaction);
         }
+
+        private bool isTransactionClosed = false;
         //CommitTransaction called only when transaction is successfull
         public void CommitTransaction()
         {
             _transaction?.Commit();
             _connection?.Close();
+
+            isTransactionClosed = true;
         }
 
         public void RollbackTransaction()
         {
             _transaction?.Rollback();
             _connection?.Close();
+
+            isTransactionClosed = true;
         }
         //Dispose is same as {} in usings in above methods
         public void Dispose()
         {
-            CommitTransaction();
+            if (isTransactionClosed == false)
+            {
+                try
+                {
+                    CommitTransaction();
+                }
+                catch
+                {
+
+                    //TODO Log this issue
+                }
+            }
+
+            _transaction = null;
+            _connection = null;
+            
         }
         //Open Connection/start transcation method
         //Load using the transaction
