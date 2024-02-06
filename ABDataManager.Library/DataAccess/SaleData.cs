@@ -52,21 +52,32 @@ namespace ABDataManager.Library.DataAccess
             };
             sale.Total = sale.SubTotal + sale.Tax;
 
-            //Save SaleModel
-            SqlDataAccess sql = new SqlDataAccess();
-
-            sql.SaveData<SaleDBModel>("dbo.spSale_Insert", sale, "ABMData");
-
-            //Get Id from SaleModel
-            sale.Id = sql.LoadData<int, dynamic>("dbo.spSaleIdLookup", new {CashierId = sale.CashierId, SaleDate = sale.SaleDate }, "ABMData").FirstOrDefault();
-            
-            //Finish filling in the SaleDetailModel
-            foreach(var product in details)
+            using (SqlDataAccess sql = new SqlDataAccess())
             {
-                product.SaleId = sale.Id;
-                sql.SaveData<SaleDetailDBModel>("dbo.spSaleDetail_Insert", product, "ABMData");
-            }
+                try
+                {
+                    sql.StartTransaction("ABMData");
 
+                    sql.SaveDataInTransaction<SaleDBModel>("dbo.spSale_Insert", sale);
+
+                    //Get Id from SaleModel
+                    sale.Id = sql.LoadDataInTransaction<int, dynamic>("dbo.spSaleIdLookup", new { CashierId = sale.CashierId, SaleDate = sale.SaleDate }).FirstOrDefault();
+
+                    //Finish filling in the SaleDetailModel
+                    foreach (var product in details)
+                    {
+                        product.SaleId = sale.Id;
+                        sql.SaveDataInTransaction<SaleDetailDBModel>("dbo.spSaleDetail_Insert", product);
+                    }
+
+                    sql.CommitTransaction(); //will be done anyway, but for safety
+                }
+                catch
+                {
+                    sql.RollbackTransaction();
+                    throw; //throws original exception
+                }
+            }
 
         }
     }
