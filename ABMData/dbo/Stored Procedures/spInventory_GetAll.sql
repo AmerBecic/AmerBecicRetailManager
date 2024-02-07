@@ -4,5 +4,5 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT [Id], [ProductId], [Quantity], [PurchasePrice], [PurchasedDate] FROM dbo.Inventory;
+	SELECT [ProductId], [Quantity], [PurchasePrice], [PurchasedDate] FROM dbo.Inventory;
 END
