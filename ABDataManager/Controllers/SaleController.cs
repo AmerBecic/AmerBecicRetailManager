@@ -14,6 +14,7 @@ namespace ABDataManager.Controllers
     [Authorize]
     public class SaleController : ApiController
     {
+        [Authorize(Roles = "Cashier")]
         [HttpPost]
         public void Post(SaleModel sale)
         {
@@ -24,6 +25,7 @@ namespace ABDataManager.Controllers
             data.SaveSale(sale, userId);
         }
 
+        [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         [Route("GetSalesReport")]
         public List<SaleReportModel> GetSalesReport()

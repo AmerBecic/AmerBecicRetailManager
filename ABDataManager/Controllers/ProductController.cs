@@ -9,7 +9,7 @@ using ABDataManager.Library.Models;
 
 namespace ABDataManager.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Cashier")]
     public class ProductController : ApiController
     {
         [HttpGet]
