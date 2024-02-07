@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace ABDataManager.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class SaleController : ApiController
     {
         [HttpPost]
