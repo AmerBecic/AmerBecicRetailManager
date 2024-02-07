@@ -93,7 +93,6 @@ namespace ABDataManager.Library.Internal.DataAccess
                 }
                 catch
                 {
-
                     //TODO Log this issue
                 }
             }
@@ -102,10 +101,5 @@ namespace ABDataManager.Library.Internal.DataAccess
             _connection = null;
             
         }
-        //Open Connection/start transcation method
-        //Load using the transaction
-        //Save using the transaction
-        //Close connection/stop transaction method
-        //implement Dispose
     }
 }
