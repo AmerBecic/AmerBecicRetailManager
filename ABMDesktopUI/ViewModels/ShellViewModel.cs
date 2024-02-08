@@ -42,6 +42,12 @@ namespace ABMDesktopUI.ViewModels
             }
         }
 
+        public void UserManagement()
+        {
+            ActivateItem(IoC.Get<UserViewModel>());
+        }
+
+
         public void ExitApplication()
         {
             TryClose();

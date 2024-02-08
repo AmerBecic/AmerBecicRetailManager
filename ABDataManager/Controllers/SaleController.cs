@@ -27,7 +27,7 @@ namespace ABDataManager.Controllers
 
         [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
-        [Route("GetSalesReport")]
+        [Route("api/Sale/GetSalesReport")]
         public List<SaleReportModel> GetSalesReport()
         {
             SaleData data = new SaleData();

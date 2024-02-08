@@ -17,10 +17,10 @@ namespace ABMDesktopUI.ViewModels
     public class SalesViewModel : Screen
     {
         private BindingList<ProductDisplayModel> _products;
-        ISaleApi _saleApi;
-        IProductApi _productApi;
-        IConfigHelper _configHelper;
-        IMapper _mapper;
+        private readonly ISaleApi _saleApi;
+        private readonly IProductApi _productApi;
+        private readonly IConfigHelper _configHelper;
+        private readonly IMapper _mapper;
         private readonly StatusInfoViewModel _statusInfo;
         private readonly IWindowManager _window;
 

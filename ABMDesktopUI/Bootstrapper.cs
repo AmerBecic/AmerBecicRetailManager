@@ -48,6 +48,7 @@ namespace ABMDesktopUI
 
             _container.Instance(_container)
                 .PerRequest<ISaleApi, SaleApi>()
+                .PerRequest<IUserApi, UserApi>()
                 .PerRequest<IProductApi, ProductApi>();
 
             _container
