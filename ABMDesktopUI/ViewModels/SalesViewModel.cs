@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using ABMDesktopUI.Library.Api;
 using ABMDesktopUI.Library.Helpers;
 using ABMDesktopUI.Library.Models;
@@ -18,11 +21,15 @@ namespace ABMDesktopUI.ViewModels
         IProductApi _productApi;
         IConfigHelper _configHelper;
         IMapper _mapper;
+        private readonly StatusInfoViewModel _statusInfo;
+        private readonly IWindowManager _window;
 
-        public SalesViewModel(IProductApi productApi, ISaleApi saleApi, IConfigHelper configHelper, IMapper mapper)
+        public SalesViewModel(IProductApi productApi, ISaleApi saleApi, IConfigHelper configHelper, IMapper mapper, StatusInfoViewModel statusInfo, IWindowManager window)
         {
             _configHelper = configHelper;
             _mapper = mapper;
+            _statusInfo = statusInfo;
+            _window = window;
             _productApi = productApi;
             _saleApi = saleApi;
         }
@@ -30,7 +37,29 @@ namespace ABMDesktopUI.ViewModels
         protected override async void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            await LoadProducts();
+            try
+            {
+                await LoadProducts();
+            }
+            catch (Exception ex)
+            {
+                dynamic settings = new ExpandoObject();
+                settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                settings.ResizeMode = ResizeMode.NoResize;
+                settings.Title = "System Error";
+
+                if(ex.Message == "Unauthorized")
+                {
+                    _statusInfo.UpdateMessage("Unauthorized Access", "You do not have permission to interact with the Sales Form");
+                    _window.ShowDialog(_statusInfo, null, settings);
+                }
+                else
+                {
+                    _statusInfo.UpdateMessage("Fatal Exception", ex.Message);
+                    _window.ShowDialog(_statusInfo, null, settings);
+                }
+                TryClose();
+            }
         }
         private async Task LoadProducts()
         {
@@ -260,6 +289,9 @@ namespace ABMDesktopUI.ViewModels
                 return output;
             }
         }
+
+        public StatusInfoViewModel Statusinfo { get; }
+
         public async Task CheckOut()
         {
             //Create a SaleModel and post to the API
