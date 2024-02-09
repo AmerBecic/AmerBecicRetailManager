@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ABDataManager.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UserController : ApiController
     {
         [HttpGet]
@@ -59,7 +59,7 @@ namespace ABDataManager.Controllers
             return output;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/User/Admin/GetAllRoles")]
         public Dictionary<string, string> GetAllRoles()
@@ -69,6 +69,34 @@ namespace ABDataManager.Controllers
                 var roles = context.Roles.ToDictionary(x => x.Id, x => x.Name);
 
                 return roles;
+            }
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("api/User/Admin/AddRoleToUser")]
+        public void AddRoleToUser(UserRolePairModel userRolepair)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                userManager.AddToRole(userRolepair.UserId, userRolepair.RoleName);
+            }
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("api/User/Admin/RemoveRoleFromUser")]
+        public void RemoveRoleFromUser(UserRolePairModel userRolepair)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                userManager.RemoveFromRole(userRolepair.UserId, userRolepair.RoleName);
             }
         }
     }
