@@ -59,6 +59,19 @@ namespace ABMDesktopUI.ViewModels
             Users = new BindingList<ApplicationUserModel>(usersList);
         }
 
+        private async Task LoadAvailableRoles()
+        {
+            var roles = await _userApi.GetAllRoles();
+
+            foreach(var role in roles)
+            {
+                if (UserRoles.IndexOf(role.Value) < 0)
+                {
+                    AvailableRoles.Add(role.Value);
+                }
+            }
+        }
+
         public BindingList<ApplicationUserModel> Users
         {
             get { return _users; }
@@ -68,5 +81,100 @@ namespace ABMDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => Users);
             }
         }
+
+        private ApplicationUserModel _selectedUser;
+
+        public ApplicationUserModel SelectedUser
+        {
+            get { return  _selectedUser; }
+            set
+            {
+                _selectedUser = value;
+                SelectedUserName = _selectedUser.Email;
+                UserRoles = new BindingList<string>(_selectedUser.Roles.Select(x => x.Value).ToList());
+                LoadAvailableRoles();
+                NotifyOfPropertyChange(() => SelectedUser);
+            }
+        }
+
+        private string _selectedUserRole;
+
+        public string SelectedUserRole
+        {
+            get { return _selectedUserRole; }
+            set
+            {
+                _selectedUserRole = value;
+                NotifyOfPropertyChange(() => SelectedUserRole);
+            }
+        }
+
+        private string _selectedAvaialbeRole;
+        public string SelectedAvailableRole
+        {
+            get { return _selectedAvaialbeRole; }
+            set
+            {
+                _selectedAvaialbeRole = value;
+                NotifyOfPropertyChange(() => SelectedAvailableRole);
+            }
+        }
+
+        private string _selectedUserName;
+
+        public string SelectedUserName
+        {
+            get 
+            { 
+                return _selectedUserName;
+            }
+            set 
+            {
+                _selectedUserName = value;
+                NotifyOfPropertyChange(() => SelectedUserName);
+            }
+        }
+
+        private BindingList<string> _userRoles = new BindingList<string>();
+
+        public BindingList<string> UserRoles
+        {
+            get { return _userRoles; }
+            set 
+            {
+                _userRoles = value;
+                NotifyOfPropertyChange(() => UserRoles);
+            }
+        }
+
+        private BindingList<string> _availableRoles = new BindingList<string>();
+        public BindingList<string> AvailableRoles
+        {
+            get { return _availableRoles; }
+            set
+            {
+                _availableRoles = value;
+                NotifyOfPropertyChange(() => AvailableRoles);
+            }
+        }
+
+        public async void AddSelectedRole()
+        {
+            await _userApi.AddRoleToUser(SelectedUser.Id, SelectedAvailableRole);
+
+            UserRoles.Add(SelectedAvailableRole);
+            AvailableRoles.Remove(SelectedAvailableRole);
+
+        }
+
+        public async void RemoveSelectedRole()
+        {
+            await _userApi.RemoveRoleFromUser(SelectedUser.Id, SelectedUserRole);
+
+            AvailableRoles.Add(SelectedUserRole);
+            UserRoles.Remove(SelectedUserRole);
+        }
+
+
     }
 }
