@@ -26,4 +26,15 @@ Technologies used:
 Currently only UI part of the app has Dependency Injection built into it.
 Future plan is to implement Dependency Injection system into API.
 
+- Endpoints:
+<img src="/README-pics/Endpoints.png">
 
+- LogIn:
+<img src="/README-pics/LogIn.png" width="500">
+
+- SalesPage:
+<img src="/README-pics/SalesPage1.png" width="500">
+<img src="/README-pics/SalesPage2.png" width="500">
+
+- Structure:
+<img src="/README-pics/Structure.png" width="500">
