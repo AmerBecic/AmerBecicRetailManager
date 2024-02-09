@@ -1,5 +1,5 @@
-# AmerBecic Retail Manager
-This is a demo for a Retail Manager. 
+# Shopping App
+This is a demo for a Shopping app. 
 
 
 Having accumulated 2 years of experience with the MVC design pattern, I've chosen to embark on a challenging journey to explore and construct something using the MVVM architecture. <br/>
