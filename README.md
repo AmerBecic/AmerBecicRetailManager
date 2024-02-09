@@ -9,11 +9,10 @@ Looking ahead, I intend to further develop this application using the MVC.
 ## Description
 
 Again this is a demo, with MVP bulding style. Main focus is on the functionalities of backend part of the application.
-While I do have plans to improve Frontend part of the application, but probably not in a near future.
+I do have plans to improve Frontend part of the application, but probably not in a near future.
 
 This application allows you to buy Products from Inventory. 
-There are 3 types of users (Admin, Cashier and Manager).
-Every role has certain limitations, for example only Admin can see info and roles about other users and edit them.
+Currently here are 3 types of users (Admin, Cashier and Manager).
 
 Technologies used:
 
