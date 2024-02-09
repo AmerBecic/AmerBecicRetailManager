@@ -21,6 +21,7 @@ Technologies used:
 - Dapper and EF
 - SQL
 - Git
+- Bootstrap
 
 
 
