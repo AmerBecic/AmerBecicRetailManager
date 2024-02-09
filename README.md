@@ -23,6 +23,7 @@ Technologies used:
 - Git
 - Bootstrap
 
-
+Currently only UI part of the app has Dependency Injection built into it.
+Future plan is to implement Dependency Injection system into API.
 
 
