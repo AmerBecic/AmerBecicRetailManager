@@ -6,7 +6,7 @@ Having accumulated 2 years of experience with the MVC design pattern, I've chose
 
 Looking ahead, I intend to further develop this application using the MVC.
 
-##Description
+## Description
 
 Again this is a demo, with MVP bulding style. Main focus is on the functionalities of backend part of the application.
 While I do have plans to improve Frontend part of the application, but probably not in a near future.
