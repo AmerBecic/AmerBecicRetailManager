@@ -10,7 +10,7 @@ Again this is a demo, with MVP bulding style. Main focus is on the functionaliti
 
 Technologies used:
 
-- .Net MVVM
+- .Net Framework MVVM
 - Dapper and EF
 - SQL
 - Git
