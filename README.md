@@ -16,6 +16,9 @@ Technologies used:
 - Git
 - Bootstrap
 
+   <br/>
+    <br/>
+
 - Endpoints:
 <img src="/README-pics/Endpoints.png">
 
