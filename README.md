@@ -4,6 +4,8 @@ This is a demo for a Shopping app.
 
 Having accumulated 2 years of experience with the MVC design pattern, I've chosen to embark on a challenging journey to explore and construct something using the MVVM architecture. <br/>
 
+This repository will not be getting anymore updates, for newer version in .Net Core visit:   https://github.com/AmerBecic/ShoppingApplication
+
 ## Description
 
 Again this is a demo, with MVP bulding style. Main focus is on the functionalities of backend part of the application. <br/>
