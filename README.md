@@ -1,10 +1,9 @@
 # Shopping App
 This is a demo for a Shopping app. 
 
+This repository will not be getting anymore updates, for newer version in .Net Core visit:   https://github.com/AmerBecic/ShoppingApplication
 
 Having accumulated 2 years of experience with the MVC design pattern, I've chosen to embark on a challenging journey to explore and construct something using the MVVM architecture. <br/>
-
-This repository will not be getting anymore updates, for newer version in .Net Core visit:   https://github.com/AmerBecic/ShoppingApplication
 
 ## Description
 
